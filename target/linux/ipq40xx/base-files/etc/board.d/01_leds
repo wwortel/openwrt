@@ -68,6 +68,8 @@ mikrotik,hap-ac3)
 	ucidef_set_led_switch "lan4" "LAN4" "green:lan4" "switch0" "0x02"
 	ucidef_set_led_gpio "poe" "POE" "red:poe" "452" "0"
 	;;
+mikrotik,ldf-5-ac |\
+mikrotik,lhg-5-ac |\
 mikrotik,sxtsq-5-ac)
 	ucidef_set_rssimon "wlan0" "200000" "1"
 	ucidef_set_led_rssi "rssilow" "rssilow" "green:rssilow" "wlan0" "1" "100"

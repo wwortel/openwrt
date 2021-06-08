@@ -7,12 +7,12 @@
 #include <dt-bindings/soc/qcom,tcsr.h>
 
 / {
-	model = "MikroTik hAP ac2";
-	compatible = "mikrotik,hap-ac2";
-
+	model = "MikroTik Various 5 ac (RBVARIOUS-5acD)";
+	compatible = "mikrotik,various-5acd";
+	
 	memory {
 		device_type = "memory";
-		reg = <0x80000000 0x08000000>;
+		reg = <0x80000000 0x10000000>;
 	};
 
 	chosen {
@@ -62,38 +62,6 @@
 			qcom,wifi_noc_memtype_m0_m2 = <TCSR_WIFI_NOC_MEMTYPE_M0_M2>;
 		};
 
-		usb2@60f8800 {
-			status = "okay";
-
-			dwc3@6000000 {
-				#address-cells = <1>;
-				#size-cells = <0>;
-
-				usb2_port1: port@1 {
-					reg = <1>;
-					#trigger-source-cells = <0>;
-				};
-			};
-		};
-
-		usb3@8af8800 {
-			status = "okay";
-
-			dwc3@8a00000 {
-				#address-cells = <1>;
-				#size-cells = <0>;
-
-				usb3_port1: port@1 {
-					reg = <1>;
-					#trigger-source-cells = <0>;
-				};
-
-				usb3_port2: port@2 {
-					reg = <2>;
-					#trigger-source-cells = <0>;
-				};
-			};
-		};
 		crypto@8e3a000 {
 			status = "okay";
 		};
@@ -102,28 +70,14 @@
 			status = "okay";
 		};
 
-		ess-switch@c000000 {
+		ess-psgmii@98000 {
 			status = "okay";
-			switch_lan_bmp = <0x1e>;
-			switch_wan_bmp = <0x20>;
-/*
-			switch_lan_bmp = <0x0e>;
-			switch_wan_bmp = <0x30>;
-*/
 		};
 
 		edma@c080000 {
+			qcom,num_gmac = <1>;
+			qcom,single-phy;
 			status = "okay";
-			qcom,num_gmac = <2>;
-
-			gmac0 {
-				vlan_tag = <1 0x1e>;
-			};
-			
-			gmac1 {
-				/delete-property/ qcom,forced_speed;
-				/delete-property/ qcom,forced_duplex;
-			};
 		};
 	};
 
@@ -134,12 +88,6 @@
 			label = "reset";
 			gpios = <&tlmm 63 GPIO_ACTIVE_LOW>;
 			linux,code = <KEY_RESTART>;
-		};
-
-		mode {
-			label = "mode";
-			gpios = <&tlmm 5 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_RFKILL>;
 		};
 	};
 
@@ -156,6 +104,31 @@
 		led_user: user {
 			label = "green:user";
 			gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
+		};
+
+		rssilow {
+			label = "green:rssilow";
+			gpios = <&tlmm 58 GPIO_ACTIVE_HIGH>;
+		};
+
+		rssimediumlow {
+			label = "green:rssimediumlow";
+			gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
+		};
+
+		rssimedium {
+			label = "green:rssimedium";
+			gpios = <&tlmm 2 GPIO_ACTIVE_HIGH>;
+		};
+
+		rssimediumhigh {
+			label = "green:rssimediumhigh";
+			gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
+		};
+
+		rssihigh {
+			label = "green:rssihigh";
+			gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
 		};
 	};
 };
@@ -176,6 +149,7 @@
 			drive-strength = <2>;
 			bias-disable;
 		};
+
 		pin_cs {
 			function = "gpio";
 			pins = "gpio54";
@@ -183,13 +157,6 @@
 			bias-disable;
 			output-high;
 		};
-	};
-
-	enable-usb-power {
-		gpio-hog;
-		gpios = <2 GPIO_ACTIVE_HIGH>;
-		output-high;
-		line-name = "enable USB power";
 	};
 };
 
@@ -261,44 +228,8 @@
 	status = "okay";
 };
 
-&usb3_ss_phy {
-	status = "okay";
-};
-
-&usb3_hs_phy {
-	status = "okay";
-};
-
-&usb2_hs_phy {
-	status = "okay";
-};
-
 &mdio {
 	status = "okay";
-};
-
-&ethphy0 {
-	qcom,single-led-1000;
-	qcom,single-led-100;
-	qcom,single-led-10;
-};
-
-&ethphy1 {
-	qcom,single-led-1000;
-	qcom,single-led-100;
-	qcom,single-led-10;
-};
-
-&ethphy2 {
-	qcom,single-led-1000;
-	qcom,single-led-100;
-	qcom,single-led-10;
-};
-
-&ethphy3 {
-	qcom,single-led-1000;
-	qcom,single-led-100;
-	qcom,single-led-10;
 };
 
 &ethphy4 {
@@ -307,14 +238,15 @@
 	qcom,single-led-10;
 };
 
-&wifi0 {
-	status = "okay";
-
-	qcom,ath10k-calibration-variant = "MikroTik-hAP-ac2";
-};
-
 &wifi1 {
 	status = "okay";
+	qcom,ath10k-calibration-variant = "MikroTik-7442a-LHG5ACD";
+};
 
-	qcom,ath10k-calibration-variant = "MikroTik-hAP-ac2";
+&gmac0 {
+	qcom,phy_mdio_addr = <4>;
+	qcom,poll_required = <1>;
+	qcom,forced_speed = <1000>;
+	qcom,forced_duplex = <1>;
+	vlan_tag = <1 0x20>;
 };

@@ -33,6 +33,10 @@ ALLWIFIBOARDS:= \
 	glinet_gl-b2200 \
 	glinet_gl-s1300 \
 	linksys_ea8300 \
+	linksys_mr8300-v0 \
+	luma_wrtq-329acn \
+	mobipromo_cm520-79f \
+	nec_wg2600hp3 \
 	p2w_r619ac \
 	qxwlan_e2600ac-c1 \
 	qxwlan_e2600ac-c2 \
@@ -105,6 +109,10 @@ $(eval $(call generate-ipq-wifi-package,glinet_gl-ap1300,GL.iNet GL-AP1300))
 $(eval $(call generate-ipq-wifi-package,glinet_gl-b2200,GL.iNet GL-B2200))
 $(eval $(call generate-ipq-wifi-package,glinet_gl-s1300,GL.iNet GL-S1300))
 $(eval $(call generate-ipq-wifi-package,linksys_ea8300,Linksys EA8300))
+$(eval $(call generate-ipq-wifi-package,linksys_mr8300-v0,Linksys MR8300))
+$(eval $(call generate-ipq-wifi-package,luma_wrtq-329acn,Luma WRTQ-329ACN))
+$(eval $(call generate-ipq-wifi-package,mobipromo_cm520-79f,MobiPromo CM520-79F))
+$(eval $(call generate-ipq-wifi-package,nec_wg2600hp3,NEC Platforms WG2600HP3))
 $(eval $(call generate-ipq-wifi-package,p2w_r619ac,P&W R619AC))
 $(eval $(call generate-ipq-wifi-package,qxwlan_e2600ac-c1,Qxwlan E2600AC C1))
 $(eval $(call generate-ipq-wifi-package,qxwlan_e2600ac-c2,Qxwlan E2600AC C2))
